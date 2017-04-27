@@ -103,52 +103,34 @@ int main() {
 	player = 1;
 
 	do {
+		cout << "Player " << player << " what's your move?\n";
+		cin >> board_number >> row_number >> column_number;
+		while (board_number < 0 || board_number > 3 || 
+			   row_number < 0 || row_number > 3 ||
+			   column_number < 0 || column_number > 3 ||
+			   board[board_number][row_number][column_number] != 'N') {
+			if (board_number < 0 || board_number > 3 || 
+			   row_number < 0 || row_number > 3 ||
+			   column_number < 0 || column_number > 3) {
+				cout << "Sorry Player " << player << ". That was an invalid move. Options are 0-3\n";
+				cin >> board_number >> row_number >> column_number;
+			} else if (board[board_number][row_number][column_number] != 'N') {
+				cout << "Sorry Player " << player << ". That spot is already taken. Try again\n";
+				cin >> board_number >> row_number >> column_number;
+			}
+		}
+		board[board_number][row_number][column_number] = player+'0';
+		print_board(board);
+
 		if (player == 1) {
-			cout << "Player 1 what's your move?\n";
-			cin >> board_number >> row_number >> column_number;
-
-			while (board_number < 0 || board_number > 3 || 
-				   row_number < 0 || row_number > 3 ||
-				   column_number < 0 || column_number > 3 ||
-				   board[board_number][row_number][column_number] != 'N') {
-				if (board_number < 0 || board_number > 3 || 
-				   row_number < 0 || row_number > 3 ||
-				   column_number < 0 || column_number > 3) {
-					cout << "Sorry Player 1. That was an invalid move. Options are 0-3\n";
-					cin >> board_number >> row_number >> column_number;
-				} else if (board[board_number][row_number][column_number] != 'N') {
-					cout << "Sorry Player 1. That spot is already taken. Try again\n";
-					cin >> board_number >> row_number >> column_number;
-				}
-			}
-			board[board_number][row_number][column_number] = '1';
-			print_board(board);
 			player = 2;
-		} else if (player == 2) {
-			cout << "Player 2 what's your move?\n";
-			cin >> board_number >> row_number >> column_number;
-
-			while (board_number < 0 || board_number > 3 || 
-				   row_number < 0 || row_number > 3 ||
-				   column_number < 0 || column_number > 3 ||
-				   board[board_number][row_number][column_number] != 'N') {
-				if (board_number < 0 || board_number > 3 || 
-				   row_number < 0 || row_number > 3 ||
-				   column_number < 0 || column_number > 3) {
-					cout << "Sorry Player 1. That was an invalid move. Options are 0-3\n";
-					cin >> board_number >> row_number >> column_number;
-				} else if (board[board_number][row_number][column_number] != 'N') {
-					cout << "Sorry Player 1. That spot is already taken. Try again\n";
-					cin >> board_number >> row_number >> column_number;
-				}
-			}
-			board[board_number][row_number][column_number] = '2';
-			print_board(board);
+		} else {
 			player = 1;
 		}
 
-		// check if someone won
 		check_for_winner(board);
 
 	} while (!winner);
+
+	cout << "Congratulations Player " << winner_number << "! You're the winner!" << endl;
 }
